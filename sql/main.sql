@@ -409,7 +409,7 @@ WHERE Rank = 1;
 
 
 
--- LEAST COMMON COLOR IN EACH CITY 
+-- LEAST COMMON CAR COLOUR IN EACH CITY 
 /* 
 
 Dubai               Tan
