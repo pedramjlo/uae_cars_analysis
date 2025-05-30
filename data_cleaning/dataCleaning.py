@@ -119,17 +119,15 @@ class DataCleaner:
     
 
     def clean_all(self):
-        return (
-            self.strip_spaces()
-                .titlise_columns()
-                .convert_to_string()
-                .convert_all_possible_to_integer()
-                .replace_columns()
-                .add_underscore_to_columns()
-                .imputate_null_values()
-                .remove_duplicates()
-                .raw_dataset 
-        )
+        self.strip_spaces()
+        self.titlise_columns()
+        self.convert_to_string()
+        self.convert_all_possible_to_integer()
+        self.replace_columns()
+        self.add_underscore_to_columns()
+        self.imputate_null_values()
+        self.remove_duplicates()
+        return self.raw_dataset
 
     
     

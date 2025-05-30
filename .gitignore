@@ -2,3 +2,4 @@ uae_cars.db
 .DS_Store
 .venv
 **/__pycache__/
+.env

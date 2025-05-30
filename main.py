@@ -1,6 +1,7 @@
 from loading.dataLoading import DataLoader
 from data_cleaning.dataCleaning import DataCleaner
 from saving.dataSaving import DataSaver
+from database.databaseUtils import Database
 
 if __name__ == "__main__":
     raw_dataset = "dataset/raw/uae_used_cars.csv"
@@ -23,3 +24,8 @@ if __name__ == "__main__":
     saver.save_changes()
 
 
+
+    # LAODING THE CLEANED DATASET TO THE DATABASE
+    load_to_db = Database()
+    load_to_db.create_database()
+    load_to_db.load_to_db()
