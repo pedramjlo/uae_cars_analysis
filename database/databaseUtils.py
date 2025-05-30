@@ -62,6 +62,8 @@ class Database:
             conn.close()
             logging.info("Connection closed.")
 
+
+
     def create_engine(self):
         try:
             engine = create_engine(self.connection_url)
@@ -71,6 +73,8 @@ class Database:
             logging.error("Failed to create PostgreSQL engine", exc_info=True)
             raise
 
+
+
     def load_to_db(self, table_name="uae_cars_analysis", if_exists='replace'):
         engine = self.create_engine()
         try:
@@ -78,6 +82,7 @@ class Database:
             logging.info(f"Data loaded to the table '{table_name}' successfully.")
         except Exception as e:
             logging.error(f"Failed to load the data to PostgreSQL: {e}")
+
 
     def get_connection(self):
         return psycopg2.connect(
@@ -91,6 +96,3 @@ class Database:
 
 
 
-
-dp = Database()
-print(dp.port)
