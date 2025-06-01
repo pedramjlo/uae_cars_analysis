@@ -8,18 +8,18 @@ FROM uae_cars_analysis;
 
 
 
-
+-- luxorious_brands
 SELECT 
     "Make", 
-    ROUND(AVG("Price"), 2) AS "Average_Price",
+    ROUND(AVG("Price"), 2) AS "average_price",
     RANK() OVER (ORDER BY ROUND(AVG("Price"), 2) DESC) as Rank
 FROM uae_cars_analysis
 GROUP BY "Make"
-ORDER BY "Average_Price" DESC
+ORDER BY "average_price" DESC
 LIMIT 5;
 
 
-
+-- affordable_brands
 SELECT 
     "Make", 
     ROUND(AVG("Price"), 2) AS "Average_Price",
@@ -31,11 +31,11 @@ LIMIT 5;
 
 
 
-
+-- most_expensive_cars
 SELECT
     "Location",
     CONCAT("Make", ' ', "Model", ' ', "Year") AS "Car",
-    "Price" AS "Max_Price"
+    "Price" AS "max_price"
 FROM
     uae_cars_analysis
 WHERE
@@ -48,7 +48,7 @@ WHERE
         GROUP BY
             "Location"
     )
-ORDER BY "Max_Price" DESC;
+ORDER BY "max_price" DESC;
 
 
 
@@ -190,7 +190,7 @@ WITH "Color_Counts" AS (
 )
 SELECT
     "Location",
-    "Color" AS "Mode_Color"
+    "Color" AS "popular_color"
 FROM "Max_Color"
 WHERE Rank = 1;
 
@@ -231,4 +231,38 @@ WHERE Rank = 1;
 
 
 
-SELECT DISTINCT "Fuel_Type" FROM uae_cars_analysis;
+-- NUMBER OF CARS PER BRAND
+WITH "CARS_PER_MAKE" AS (
+    SELECT 
+        "Make",
+        COUNT(*) AS "number_of_cars",
+        RANK() OVER (PARTITION BY "Make" ORDER BY COUNT(*) Desc) AS Rank
+    FROM uae_cars_analysis
+    GROUP BY "Make", "Location"
+)
+SELECT 
+    "Make",
+    "number_of_cars"
+FROM "CARS_PER_MAKE"
+ORDER BY  "number_of_cars" DESC
+LIMIT 10;
+
+
+
+-- NUMBER OF CARS SOLD IN EACH CITY BY MAKE
+WITH CARS_SOLD_PER_CITY AS (
+    SELECT 
+        "Location",
+        "Make",
+        COUNT(*) AS "number_of_cars",
+        RANK() OVER (PARTITION BY "Location" ORDER BY COUNT(*) DESC) AS "rank"
+    FROM uae_cars_analysis
+    GROUP BY "Location", "Make"
+)
+SELECT 
+    "Location",
+    "Make",
+    "number_of_cars"
+FROM CARS_SOLD_PER_CITY
+WHERE "rank" <= 10
+ORDER BY "Location", "number_of_cars" DESC;
