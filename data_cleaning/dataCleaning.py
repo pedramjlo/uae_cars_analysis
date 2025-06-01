@@ -27,14 +27,12 @@ class DataCleaner:
         return self
 
     
-    def titlise_columns(self):
+    def normalise_columns(self):
         try:
-            self.raw_dataset['Make'] = self.raw_dataset['Make'].str.title()
-            self.raw_dataset['Model'] = self.raw_dataset['Model'].str.title()
-            self.raw_dataset['Location'] = self.raw_dataset['Location'].str.title()
-            logging.info("Successfully titlised columns")
+            self.raw_dataset.columns = ["_".join(col.lower().split()) for col in self.raw_dataset.columns]
+            logging.info("Successfully converted column names")
         except Exception as e:
-            logging.error(f"Failed to titlise some columns: {e}")
+            logging.error(f"Failed to convert columns: {e}")
         return self
         
 
@@ -120,7 +118,7 @@ class DataCleaner:
 
     def clean_all(self):
         self.strip_spaces()
-        self.titlise_columns()
+        self.normalise_columns()
         self.convert_to_string()
         self.convert_all_possible_to_integer()
         self.replace_columns()
