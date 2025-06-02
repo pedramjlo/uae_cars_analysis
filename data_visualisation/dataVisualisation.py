@@ -5,6 +5,7 @@ class Visualisation:
     def bar_chart(self, data, x, y, title=None, labels=None):
         fig = px.bar(data, x=x, y=y, title=title, labels=labels)
         fig.update_traces(marker_color='purple')
+        fig.update_yaxes(type="log")
         fig.show()
 
 
@@ -17,6 +18,7 @@ class Visualisation:
         fig = px.scatter(data, x=x, y=y, title=title, labels=labels)
         fig.show()
 
-    def box_plot(self, data, y):
-        fig = px.box(data, y=y)
+    def box_plot(self, data, x, y, title=None, labels=None):
+        fig = px.box(data, x=x, y=y, title=title, labels=labels)
+        fig.update_yaxes(type="log")
         fig.show()

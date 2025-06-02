@@ -25,38 +25,32 @@ class CorrelationAnalysis:
         return "Invalid correlation score"
 
 
-
     def location_price_correlation(self):
         try:
-            # Step 1: Calculate median price per location
+            # Step 1: Calculate correlation between location codes and median prices
             median_prices = (
                 self.df.groupby("location")["price"]
                 .median()
                 .reset_index()
                 .rename(columns={"price": "median_price"})
-                .sort_values(by="median_price", ascending=False)
             )
 
-            # Step 2: Convert location to numeric codes to compute correlation
             median_prices["location_code"] = median_prices["location"].astype("category").cat.codes
-
-            # Step 3: Calculate correlation between location_code and median_price
             correlation_score = median_prices["location_code"].corr(median_prices["median_price"])
 
-
-            self.plot.pie_chart(
-                median_prices.sort_values(by="median_price", ascending=False),
+            # Step 2: Plot box plot using raw data
+            self.plot.box_plot(
+                data=self.df,
                 x="location",
-                y="median_price",
-                title="Median Car Price by Location",
+                y="price",
+                title="Price Distribution Across Cities",
                 labels={
-                    "location": "Location", 
-                    "median_price": "Median Price (AED)"
+                    "location": "Location",
+                    "price": "Price (AED)"
                 }
             )
 
-            description = self.interpret_correlation(correlation_score)
-            return correlation_score, description
-
+            return correlation_score
         except Exception as e:
             raise e
+

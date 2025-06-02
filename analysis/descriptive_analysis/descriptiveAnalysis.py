@@ -375,5 +375,29 @@ class SalesAnalysis:
 
 
 class CityAnalysis:
-    def __init__(self, df):
+    def __init__(self, df, plot=None):
         self.df = df
+        self.plot = plot
+
+
+    def revenue_per_city(self):
+        try:
+            results = (
+                self.df.groupby("location")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+            )
+            self.plot.bar_chart(
+                data=results,
+                x="location",
+                y="price",
+                labels={
+                    "location": "City",
+                    "price": "Total Sales (AED)"
+                },
+                title="Revenue per City"
+            )
+            return results
+        except Exception as e:
+            raise e
