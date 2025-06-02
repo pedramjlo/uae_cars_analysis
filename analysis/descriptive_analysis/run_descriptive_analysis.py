@@ -50,4 +50,5 @@ if __name__ == "__main__":
     
 
     # CITY ANALYSIS
-    city.revenue_per_city()
+    #city.revenue_per_city()
+    city.top_selling_brands_per_city(city_name="Dubai")

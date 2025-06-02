@@ -401,3 +401,29 @@ class CityAnalysis:
             return results
         except Exception as e:
             raise e
+        
+
+    def top_selling_brands_per_city(self, city_name):
+        try:
+            if city_name:
+                city_data = self.df[self.df["location"] == city_name]
+                results = (
+                    city_data.groupby("make")["price"]
+                    .sum()
+                    .reset_index()
+                    .sort_values(by="price", ascending=False)
+                )
+                self.plot.bar_chart(
+                data=results,
+                x="make",
+                y="price",
+                labels={
+                    "make": "Car Brand",
+                    "price": f"Total Sales in {city_name} (AED)"
+                },
+                title=f"Top Selling Brands in {city_name}"
+            )
+
+            return results
+        except Exception as e:
+            raise e
