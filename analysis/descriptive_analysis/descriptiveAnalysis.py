@@ -1,3 +1,4 @@
+from babel.numbers import format_currency
 
 
 
@@ -283,8 +284,16 @@ class VehicleAnalysis:
 
 
 class SalesAnalysis:
-    def __init__(self, df):
+    def __init__(self, df, plot=None):
         self.df = df
+        self.plot = plot
+
+
+    def total_sales(self):
+        sales = self.df["price"].sum()
+        formatted_currency = format_currency(sales, 'AED', locale='en_AE')
+        return formatted_currency
+        
 
 
 class CityAnalysis:

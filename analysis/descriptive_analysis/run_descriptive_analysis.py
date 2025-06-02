@@ -7,7 +7,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"
 from data_visualisation.dataVisualisation import Visualisation
 
 from descriptiveAnalysis import BrandAnalysis
-from  descriptiveAnalysis import VehicleAnalysis
+from descriptiveAnalysis import VehicleAnalysis
+from descriptiveAnalysis import SalesAnalysis
 
 import pandas as pd
 
@@ -20,6 +21,7 @@ if __name__ == "__main__":
 
     ba = BrandAnalysis(df=df, plot=visualisor)
     va = VehicleAnalysis(df=df, plot=visualisor)
+    sales = SalesAnalysis(df=df)
 
 
     # BRAND ANALYSIS
@@ -35,4 +37,8 @@ if __name__ == "__main__":
     #va.top_10_most_expensive_cars()
     #va.top_10_least_expensive_cars()
     #va.top_10_profitable_cars()
-    va.least_10_profitable_cars()
+    #va.least_10_profitable_cars()
+
+
+    # SALES ANALYSIS
+    print(sales.total_sales())
