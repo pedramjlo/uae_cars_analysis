@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     ba = BrandAnalysis(df=df, plot=visualisor)
     va = VehicleAnalysis(df=df, plot=visualisor)
-    sales = SalesAnalysis(df=df)
+    sales = SalesAnalysis(df=df, plot=visualisor)
 
 
     # BRAND ANALYSIS
@@ -43,3 +43,4 @@ if __name__ == "__main__":
     # SALES ANALYSIS
     #print(sales.total_sales())
     print(sales.sales_by_year())
+    sales.sales_by_year()

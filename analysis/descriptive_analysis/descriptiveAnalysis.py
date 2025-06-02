@@ -298,6 +298,16 @@ class SalesAnalysis:
                 .reset_index()
                 .sort_values(by='year', ascending=True)
             )            
+            self.plot.line_chart(
+                data=results,
+                x="year",
+                y="total_sales",
+                labels={
+                    "year": "year",
+                    "total_sales": "Total Sales (AED)"
+                },
+                title="Sales by Year"
+            )
             return results
         except Exception as e:
             raise e
