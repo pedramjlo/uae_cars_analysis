@@ -139,7 +139,41 @@ class VehicleAnalysis:
     def __init__(self, df, plot):
         self.df = df
         self.plot = plot
-        
+
+
+    def top_10_most_expensive_cars(self):
+        try:
+            
+            self.df["Vehicle"] = (
+                self.df["make"] + " " +
+                self.df["model"] + " " +
+                self.df["year"].astype(str)
+            )
+            
+
+            # Sort by price and take the top 10 rows directly
+            results = (
+                self.df.sort_values(by="price", ascending=False)
+                    .head(10)[["Vehicle", "price"]]
+            )
+
+            self.plot.bar_chart(
+                data=results,
+                x="Vehicle",
+                y="price",
+                labels={
+                    "model": "Vehicle",
+                    "price": "Price (AED)"
+                },
+                title="Top 10 Most Expensive Cars"
+            )
+
+            return results
+        except Exception as e:
+            raise e
+
+
+            
 
 
 
