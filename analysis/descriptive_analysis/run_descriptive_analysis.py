@@ -32,4 +32,5 @@ if __name__ == "__main__":
 
 
     # VEHICLE ANALYSIS
-    va.top_10_most_expensive_cars()
+    #va.top_10_most_expensive_cars()
+    va.top_10_least_expensive_cars()
