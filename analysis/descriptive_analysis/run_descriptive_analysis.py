@@ -31,6 +31,7 @@ if __name__ == "__main__":
     #ba.least_expensive_brands()
     #ba.top_10_eco_friendly_brands()
     #ba.fuel_type_market_share_by_brand()
+    ba.top_4_brands_yearly_sales()
 
 
     # VEHICLE ANALYSIS
@@ -42,5 +43,6 @@ if __name__ == "__main__":
 
     # SALES ANALYSIS
     #print(sales.total_sales())
-    print(sales.sales_by_year())
-    sales.sales_by_year()
+    #print(sales.sales_by_year())
+    #sales.sales_by_year()
+    

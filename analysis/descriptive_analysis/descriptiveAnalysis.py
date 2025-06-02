@@ -134,6 +134,49 @@ class BrandAnalysis:
         except Exception as e:
             raise e
         
+        
+    def top_4_brands_yearly_sales(self):
+        try:
+            # Step 1: Get top 4 brands by total sales
+            total_sales = (
+                self.df.groupby("make")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by='price', ascending=False)
+                .head(4)
+            )
+            top_4_brands = total_sales["make"].tolist()
+
+            # Step 2: Filter the original DataFrame to only include top 3 brands
+            filtered_df = self.df[self.df["make"].isin(top_4_brands)]
+
+            # Step 3: Group by brand and year to get yearly sales
+            results = (
+                filtered_df.groupby(["make", "year"])["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by=["make", "year"])
+            )
+
+            # Step 4: Plot
+            self.plot.line_chart(
+                data=results,
+                x="year",
+                y="price",
+                color="make",
+                labels={
+                    "year": "Year",
+                    "price": "Total Sales (AED)"
+                },
+                title="Top 4 Brands' Sales by Year"
+            )
+
+            return results
+
+        except Exception as e:
+            raise e
+
+           
 
 
 class VehicleAnalysis:
@@ -304,6 +347,16 @@ class SalesAnalysis:
                 y="total_sales",
                 labels={
                     "year": "year",
+                    "total_sales": "Total Sales (AED)"
+                },
+                title="Sales by Year"
+            )
+            self.plot.bar_chart(
+                data=results,
+                x="year",
+                y="total_sales",
+                labels={
+                    "year": "Year",
                     "total_sales": "Total Sales (AED)"
                 },
                 title="Sales by Year"

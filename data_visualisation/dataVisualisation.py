@@ -8,7 +8,7 @@ class Visualisation:
         fig.show()
 
 
-    def line_chart(self, data, x, y, title=None, labels=None):
-        fig = px.line(data, x=x, y=y, title=title, labels=labels)
+    def line_chart(self, data, x, y, title=None, labels=None, color=None):
+        fig = px.line(data, x=x, y=y, title=title, labels=labels, color=color)
         fig.update_traces(marker_color='purple')
         fig.show()
