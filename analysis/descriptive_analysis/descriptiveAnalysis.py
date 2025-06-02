@@ -289,6 +289,21 @@ class SalesAnalysis:
         self.plot = plot
 
 
+    def sales_by_year(self):
+        try:
+            self.df = self.df.rename(columns={"price": "total_sales"})
+            results = (
+                self.df.groupby("year")["total_sales"]
+                .sum()
+                .reset_index()
+                .sort_values(by='year', ascending=True)
+            )            
+            return results
+        except Exception as e:
+            raise e
+        
+
+
     def total_sales(self):
         sales = self.df["price"].sum()
         formatted_currency = format_currency(sales, 'AED', locale='en_AE')

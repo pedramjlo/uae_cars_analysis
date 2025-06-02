@@ -41,4 +41,5 @@ if __name__ == "__main__":
 
 
     # SALES ANALYSIS
-    print(sales.total_sales())
+    #print(sales.total_sales())
+    print(sales.sales_by_year())
