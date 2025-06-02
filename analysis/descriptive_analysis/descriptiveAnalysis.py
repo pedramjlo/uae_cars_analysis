@@ -17,6 +17,7 @@ class BrandAnalysis:
                 .sort_values(by='price', ascending=False)
                 .head(10) 
             )
+
             self.plot.bar_chart(
                 data=results, 
                 x="make", 
@@ -26,11 +27,120 @@ class BrandAnalysis:
                     "price": "Total Sales (AED)"
                 },
                 title="Top 10 Most Profitable Brands"
-                )
+            )
             
             return results
         except Exception as e:
             raise e
+        
+
+    def least_10_profitable_brands(self):
+        try:
+            results = (
+                self.df.groupby("make")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by='price', ascending=False)
+                .tail(10) 
+            )
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="price", 
+                labels={
+                    "make": "Car Brand",
+                    "price": "Total Sales (AED)"
+                },
+                title="Top 10 Least Profitable Brands"
+            )
+            
+            return results
+        except Exception as e:
+            raise e
+        
+
+    def top_10_expensive_brands(self):
+        try:
+            results = (
+                self.df.groupby("make")["price"]
+                .median()
+                .reset_index()
+                .sort_values(by='price', ascending=False)
+                .head(10) 
+            )
+
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="price", 
+                labels={
+                    "make": "Car Brand",
+                    "price": "Median Prices (AED)"
+                },
+                title="Top 10 Most Expensive Brands"
+            )
+            return results
+        except Exception as e:
+            raise e
+        
+
+    def least_10_expensive_brands(self):
+        try:
+            results = (
+                self.df.groupby("make")["price"]
+                .median()
+                .reset_index()
+                .sort_values(by='price', ascending=False)
+                .tail(10) 
+            )
+
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="price", 
+                labels={
+                    "make": "Car Brand",
+                    "price": "Median Prices (AED)"
+                },
+                title="Top 10 Least Expensive Brands"
+            )
+            return results
+        except Exception as e:
+            raise e
+        
+
+    def top_10_eco_friendly_brands(self):
+        try:
+            electric_type = self.df[self.df['fuel_type'].str.lower() == 'electric']
+            results = (
+                electric_type.groupby("make")
+                .size()
+                .reset_index(name='eco_model_count')
+                .sort_values(by='eco_model_count', ascending=False)
+            )
+
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="eco_model_count", 
+                labels={
+                    "make": "Car Brand",
+                    "eco_model_count": "Number of EV Models"
+                },
+                title="Top 10 Most Eco-Friendly Brands"
+            )
+            return results
+        except Exception as e:
+            raise e
+        
+
+
+class VehicleAnalysis:
+    def __init__(self, df, plot):
+        self.df = df
+        self.plot = plot
+        
+
 
 
 
