@@ -25,6 +25,9 @@ class Pipeline:
         return saver.save_changes()
     
 
+    def get_columns(self):
+        print(self.cleaned_data.columns)
+
     
 
     # CENTRAL FUNCTION TO RUN ALL PIPELINE METHODS AT ONCE
@@ -38,3 +41,4 @@ if __name__ == "__main__":
     pl.load_data()
     pl.run_cleaner()
     pl.save_cleaned_data()
+    pl.get_columns()

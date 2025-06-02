@@ -172,7 +172,7 @@ class VehicleAnalysis:
         except Exception as e:
             raise e
         
-        
+
     def top_10_least_expensive_cars(self):
         try:
             
@@ -204,6 +204,76 @@ class VehicleAnalysis:
         except Exception as e:
             raise e
 
+
+
+    def top_10_profitable_cars(self):
+        try:
+            
+            self.df["vehicle"] = (
+                self.df["make"] + " " +
+                self.df["model"] + " " +
+                self.df["year"].astype(str)
+            )
+            
+
+            # Sort by price and take the top 10 rows directly
+            results = (
+                self.df.groupby("vehicle")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+                .head(10)
+            )
+
+            self.plot.bar_chart(
+                data=results,
+                x="vehicle",
+                y="price",
+                labels={
+                    "vehicle": "vehicle",
+                    "price": "Total Sales (AED)"
+                },
+                title="Top 10 Most Profitable Cars"
+            )
+
+            return results
+        except Exception as e:
+            raise e
+        
+        
+    def least_10_profitable_cars(self):
+        try:
+            
+            self.df["vehicle"] = (
+                self.df["make"] + " " +
+                self.df["model"] + " " +
+                self.df["year"].astype(str)
+            )
+            
+
+            # Sort by price and take the top 10 rows directly
+            results = (
+                self.df.groupby("vehicle")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+                .tail(10)
+            )
+
+            self.plot.bar_chart(
+                data=results,
+                x="vehicle",
+                y="price",
+                labels={
+                    "vehicle": "vehicle",
+                    "price": "Total Sales (AED)"
+                },
+                title="Top 10 Least Profitable Cars"
+            )
+
+            return results
+        except Exception as e:
+            raise e
 
 
 
