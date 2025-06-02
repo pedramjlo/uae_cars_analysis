@@ -49,8 +49,9 @@ class CorrelationAnalysis:
                 x="location",
                 y="median_price",
                 title="Median Car Price by Location",
-                labels={"location": "Location", 
-                        "median_price": "Median Price (AED)"
+                labels={
+                    "location": "Location", 
+                    "median_price": "Median Price (AED)"
                 }
             )
 

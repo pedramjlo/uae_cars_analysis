@@ -16,3 +16,7 @@ class Visualisation:
     def pie_chart(self, data, x, y, title=None, labels=None):
         fig = px.scatter(data, x=x, y=y, title=title, labels=labels)
         fig.show()
+
+    def box_plot(self, data, y):
+        fig = px.box(data, y=y)
+        fig.show()
