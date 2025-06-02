@@ -12,3 +12,7 @@ class Visualisation:
         fig = px.line(data, x=x, y=y, title=title, labels=labels, color=color)
         fig.update_traces(marker_color='purple')
         fig.show()
+
+    def pie_chart(self, data, x, y, title=None, labels=None):
+        fig = px.scatter(data, x=x, y=y, title=title, labels=labels)
+        fig.show()
