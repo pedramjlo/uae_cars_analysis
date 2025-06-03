@@ -14,8 +14,8 @@ class Visualisation:
         fig.update_traces(marker_color='purple')
         fig.show()
 
-    def pie_chart(self, data, x, y, title=None, labels=None):
-        fig = px.scatter(data, x=x, y=y, title=title, labels=labels)
+    def pie_chart(self, data, values, names, title=None, labels=None):
+        fig = px.pie(data, values=values, names=names, title=title, labels=labels)
         fig.show()
 
     def box_plot(self, data, x, y, title=None, labels=None):

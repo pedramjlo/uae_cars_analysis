@@ -3,3 +3,4 @@ uae_cars.db
 .venv
 **/__pycache__/
 .env
+/data_extraction

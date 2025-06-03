@@ -427,3 +427,29 @@ class CityAnalysis:
             return results
         except Exception as e:
             raise e
+        
+    def fuel_type_market_per_city(self, city_name):
+            city_name = " ".join(seg.capitalize() for seg in city_name.split(" "))
+            try:
+                if city_name:
+                    city_data = self.df[self.df["location"] == city_name]
+                    results = (
+                        city_data.groupby("fuel_type")["price"]
+                        .sum()
+                        .reset_index()
+                        .sort_values(by="price", ascending=False)
+                    )
+                    self.plot.pie_chart(
+                    data=results,
+                    values="price",
+                    names="fuel_type",
+                    labels={
+                        "fuel_type": "Fuel Type",
+                        "price": f"Total Sales in {city_name} (AED)"
+                    },
+                    title=f"Fuel Type Sales in {city_name}"
+                )
+
+                return results
+            except Exception as e:
+                raise e
