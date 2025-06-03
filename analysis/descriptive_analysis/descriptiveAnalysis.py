@@ -410,6 +410,7 @@ class CityAnalysis:
             raise e
         
 
+
     def top_selling_brands_per_city(self, city_name):
         city_name = CityAnalysis.normalise_city_name(city_name)
         try:
@@ -436,37 +437,39 @@ class CityAnalysis:
         except Exception as e:
             raise e
         
+        
 
     def fuel_type_sales_per_city(self, city_name):
-            city_name = CityAnalysis.normalise_city_name(city_name)
-            try:
-                if city_name:
-                    city_data = self.df[self.df["location"] == city_name]
-                    results = (
-                        city_data.groupby("fuel_type")["price"]
-                        .sum()
-                        .reset_index()
-                        .sort_values(by="price", ascending=False)
-                    )
-                    self.plot.pie_chart(
-                    data=results,
-                    values="price",
-                    names="fuel_type",
-                    labels={
-                        "fuel_type": "Fuel Type",
-                        "price": f"Total Sales in {city_name} (AED)"
-                    },
-                    title=f"Fuel Type Sales in {city_name}"
+        city_name = CityAnalysis.normalise_city_name(city_name)
+        try:
+            if city_name:
+                city_data = self.df[self.df["location"] == city_name]
+                results = (
+                    city_data.groupby("fuel_type")["price"]
+                    .sum()
+                    .reset_index()
+                    .sort_values(by="price", ascending=False)
                 )
+                self.plot.pie_chart(
+                data=results,
+                values="price",
+                names="fuel_type",
+                labels={
+                    "fuel_type": "Fuel Type",
+                    "price": f"Total Sales in {city_name} (AED)"
+                },
+                title=f"Fuel Type Sales in {city_name}"
+            )
 
-                return results
-            except Exception as e:
-                raise e
+            return results
+        except Exception as e:
+            raise e
             
 
+
     def top_10_selling_cars_per_city(self, city_name):
+
         city_name = CityAnalysis.normalise_city_name(city_name)
-        results = None  # Initialize variable
 
         self.df["vehicle"] = (
                 self.df["make"] + " " +
@@ -504,3 +507,29 @@ class CityAnalysis:
         except Exception as e:
             return f"Error processing data: {str(e)}"
 
+
+    def vehicle_type_sales_per_city(self, city_name):
+        city_name = CityAnalysis.normalise_city_name(city_name)
+        try:
+            if city_name:
+                city_data = self.df[self.df["location"] == city_name]
+                results = (
+                    city_data.groupby("body_type")["price"]
+                    .sum()
+                    .reset_index()
+                    .sort_values(by="price", ascending=False)
+                )
+                self.plot.pie_chart(
+                data=results,
+                values="price",
+                names="body_type",
+                labels={
+                    "body_type": "Vehicle Type",
+                    "price": f"Total Sales in {city_name} (AED)"
+                },
+                title=f"Vehicle Type Sales in {city_name}"
+            )
+
+            return results
+        except Exception as e:
+            raise e

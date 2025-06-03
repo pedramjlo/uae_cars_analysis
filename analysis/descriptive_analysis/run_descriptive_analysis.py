@@ -53,4 +53,5 @@ if __name__ == "__main__":
     #city.revenue_per_city()
     #city.top_selling_brands_per_city(city_name="Sharjah")
     #city.fuel_type_sales_per_city(city_name="aL aIN")
-    print(city.top_10_selling_cars_per_city(city_name="dubai"))
+    #print(city.top_10_selling_cars_per_city(city_name="sharjah"))
+    city.vehicle_type_sales_per_city(city_name=input("enter city: "))
