@@ -379,6 +379,13 @@ class CityAnalysis:
         self.df = df
         self.plot = plot
 
+    
+    @staticmethod
+    def normalise_city_name(city):
+        return " ".join(seg.capitalize() for seg in city.split(" "))
+        
+
+
 
     def revenue_per_city(self):
         try:
@@ -404,6 +411,7 @@ class CityAnalysis:
         
 
     def top_selling_brands_per_city(self, city_name):
+        city_name = CityAnalysis.normalise_city_name(city_name)
         try:
             if city_name:
                 city_data = self.df[self.df["location"] == city_name]
@@ -428,8 +436,9 @@ class CityAnalysis:
         except Exception as e:
             raise e
         
-    def fuel_type_market_per_city(self, city_name):
-            city_name = " ".join(seg.capitalize() for seg in city_name.split(" "))
+
+    def fuel_type_sales_per_city(self, city_name):
+            city_name = CityAnalysis.normalise_city_name(city_name)
             try:
                 if city_name:
                     city_data = self.df[self.df["location"] == city_name]
@@ -453,3 +462,45 @@ class CityAnalysis:
                 return results
             except Exception as e:
                 raise e
+            
+
+    def top_10_selling_cars_per_city(self, city_name):
+        city_name = CityAnalysis.normalise_city_name(city_name)
+        results = None  # Initialize variable
+
+        self.df["vehicle"] = (
+                self.df["make"] + " " +
+                self.df["model"] + " " +
+                self.df["year"].astype(str)
+            )
+
+        try:
+            city_data = self.df[self.df["location"] == city_name]
+            
+            if city_data.empty:
+                return f"No sales data available for {city_name}."
+
+            results = (
+                city_data.groupby("vehicle")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+                .head(10)
+            )
+
+            self.plot.bar_chart(
+                data=results,
+                x="vehicle",
+                y="price",
+                labels={
+                    "model": "Car Model",
+                    "price": f"Total Sales in {city_name} (AED)"
+                },
+                title=f"Top Selling Models in {city_name}"
+            )
+
+            return results if results is not None else "No valid results."
+    
+        except Exception as e:
+            return f"Error processing data: {str(e)}"
+

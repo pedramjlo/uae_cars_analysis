@@ -52,4 +52,5 @@ if __name__ == "__main__":
     # CITY ANALYSIS
     #city.revenue_per_city()
     #city.top_selling_brands_per_city(city_name="Sharjah")
-    city.fuel_type_market_per_city(city_name="aL aIN")
+    #city.fuel_type_sales_per_city(city_name="aL aIN")
+    print(city.top_10_selling_cars_per_city(city_name="dubai"))
