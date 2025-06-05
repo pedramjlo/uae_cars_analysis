@@ -145,10 +145,10 @@ class BrandAnalysis:
                 .sort_values(by='price', ascending=False)
                 .head(4)
             )
-            top_4_brands = total_sales["make"].tolist()
+            all_brands = total_sales["make"].tolist()
 
-            # Step 2: Filter the original DataFrame to only include top 3 brands
-            filtered_df = self.df[self.df["make"].isin(top_4_brands)]
+            # Step 2: Filter the original DataFrame to only include top 4 brands
+            filtered_df = self.df[self.df["make"].isin(all_brands)]
 
             # Step 3: Group by brand and year to get yearly sales
             results = (
@@ -175,6 +175,9 @@ class BrandAnalysis:
 
         except Exception as e:
             raise e
+        
+
+    
 
            
 
@@ -383,6 +386,12 @@ class CityAnalysis:
     @staticmethod
     def normalise_city_name(city):
         return " ".join(seg.capitalize() for seg in city.split(" "))
+    
+
+
+    @staticmethod
+    def normalise_brand_name(brand):
+        return "-".join(seg for seg in brand.split(" "))
         
 
 
@@ -508,6 +517,7 @@ class CityAnalysis:
             return f"Error processing data: {str(e)}"
 
 
+
     def vehicle_type_sales_per_city(self, city_name):
         city_name = CityAnalysis.normalise_city_name(city_name)
         try:
@@ -533,3 +543,34 @@ class CityAnalysis:
             return results
         except Exception as e:
             raise e
+
+
+ 
+    def median_brand_prices_per_city(self, city_name, brand_name):
+        city_name = CityAnalysis.normalise_city_name(city_name)
+        brand_name = CityAnalysis.normalise_brand_name(brand_name)
+
+        try:
+            if city_name and brand_name:
+                # Filter for rows where BOTH city and brand match
+                filtered_data = self.df[
+                    (self.df["location"] == city_name) &
+                    (self.df["make"] == brand_name)
+                ]
+
+                if filtered_data.empty:
+                    return f"No data for {brand_name} in {city_name} was recorded" 
+
+                # Extract prices and calculate median
+                median_price = filtered_data["price"].median()
+
+                formatted_result = format_currency(median_price, 'AED', locale='en_AE')
+                return f"The median price for {brand_name} vehicles in {city_name}; {formatted_result}"
+
+            else:
+                return None
+
+        except Exception as e:
+            raise e
+
+            

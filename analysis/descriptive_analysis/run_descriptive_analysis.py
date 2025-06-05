@@ -51,7 +51,8 @@ if __name__ == "__main__":
 
     # CITY ANALYSIS
     #city.revenue_per_city()
-    #city.top_selling_brands_per_city(city_name="Sharjah")
-    #city.fuel_type_sales_per_city(city_name="aL aIN")
-    #print(city.top_10_selling_cars_per_city(city_name="sharjah"))
-    city.vehicle_type_sales_per_city(city_name=input("enter city: "))
+    #city.top_selling_brands_per_city(city_name=input("enter city: "))
+    #city.fuel_type_sales_per_city(city_name=input("enter city: "))
+    #print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
+    #city.vehicle_type_sales_per_city(city_name=input("enter city: "))
+    print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
