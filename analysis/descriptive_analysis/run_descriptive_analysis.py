@@ -41,6 +41,7 @@ if __name__ == "__main__":
     #va.top_10_least_expensive_cars()
     #va.top_10_profitable_cars()
     #va.least_10_profitable_cars()
+    #va.median_vehicle_price_by_type()
 
 
     # SALES ANALYSIS
@@ -53,6 +54,7 @@ if __name__ == "__main__":
     #city.revenue_per_city()
     #city.top_selling_brands_per_city(city_name=input("enter city: "))
     #city.fuel_type_sales_per_city(city_name=input("enter city: "))
-    #print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
+    print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
     #city.vehicle_type_sales_per_city(city_name=input("enter city: "))
-    print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
+    #print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
+    

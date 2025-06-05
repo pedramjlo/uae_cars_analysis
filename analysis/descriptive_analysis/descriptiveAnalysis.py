@@ -186,6 +186,7 @@ class VehicleAnalysis:
     def __init__(self, df, plot):
         self.df = df
         self.plot = plot
+        
 
 
     def top_10_most_expensive_cars(self):
@@ -318,6 +319,29 @@ class VehicleAnalysis:
                 title="Top 10 Least Profitable Cars"
             )
 
+            return results
+        except Exception as e:
+            raise e
+
+
+    def median_vehicle_price_by_type(self):
+        try:
+            results = (
+                self.df.groupby("body_type")["price"]
+                .median()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+            )
+            self.plot.bar_chart(
+                data=results,
+                x="body_type",
+                y="price",
+                labels={
+                    "body_type": "Vehicle Type",
+                    "price": "Median Price (AED)"
+                },
+                title="Median Price of Vehicle Types"
+            )
             return results
         except Exception as e:
             raise e
