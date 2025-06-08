@@ -26,15 +26,19 @@ if __name__ == "__main__":
     city = CityAnalysis(df=df, plot=visualisor)
 
 
+    print(df["cylinders"].skew())
+
+
     # BRAND ANALYSIS
     #ba.top_10_profitable_brands()
     #ba.least_10_profitable_brands()
     #ba.top_10_expensive_brands()
     #ba.least_expensive_brands()
     #ba.top_10_eco_friendly_brands()
-    ba.least_eco_friendly_brands()
+    #ba.least_eco_friendly_brands()
     #ba.fuel_type_market_share_by_brand()
     #ba.top_4_brands_yearly_sales()
+    #print(ba.get_sales_trend(brand_name="rolls-royce"))
 
 
     # VEHICLE ANALYSIS

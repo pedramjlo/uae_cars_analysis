@@ -2,6 +2,18 @@ from babel.numbers import format_currency
 
 
 
+def normalise_city_name(city):
+        return " ".join(seg.capitalize() for seg in city.split(" "))
+    
+
+
+
+def normalise_brand_name(brand):
+    return "-".join(seg for seg in brand.split(" "))
+    
+
+
+
 
 class BrandAnalysis:
     def __init__(self, df, plot):
@@ -201,6 +213,44 @@ class BrandAnalysis:
 
         except Exception as e:
             raise e
+        
+
+    def get_sales_trend(self, brand_name):
+        brand_name = brand_name.lower().strip()
+        self.df["make"] = self.df["make"].str.lower().str.strip()
+
+        if not brand_name:
+            print("No brand name provided.")
+            return None
+
+        brand_data = self.df[self.df["make"] == brand_name]
+
+        if brand_data.empty:
+            print(f"No data found for brand: {brand_name}")
+            return None
+
+        results = (
+            brand_data.groupby(["make", "year"])["price"]
+            .sum()
+            .reset_index()
+            .sort_values(by="year")
+        )
+
+        self.plot.line_chart(
+            data=results,
+            x="year",
+            y="price",
+            labels={
+                "year": "Year",
+                "price": "Total Sales (AED)"
+            },
+            title=f"{brand_name.title()}'s Sales over Time"
+        )
+
+        return results
+
+        
+
         
 
     
@@ -511,16 +561,7 @@ class CityAnalysis:
         self.plot = plot
 
     
-    @staticmethod
-    def normalise_city_name(city):
-        return " ".join(seg.capitalize() for seg in city.split(" "))
     
-
-
-    @staticmethod
-    def normalise_brand_name(brand):
-        return "-".join(seg for seg in brand.split(" "))
-        
 
 
 
@@ -549,7 +590,7 @@ class CityAnalysis:
 
 
     def top_selling_brands_per_city(self, city_name):
-        city_name = CityAnalysis.normalise_city_name(city_name)
+        city_name = normalise_city_name(city_name)
         try:
             if city_name:
                 city_data = self.df[self.df["location"] == city_name]
@@ -577,7 +618,7 @@ class CityAnalysis:
         
 
     def fuel_type_sales_per_city(self, city_name):
-        city_name = CityAnalysis.normalise_city_name(city_name)
+        city_name = normalise_city_name(city_name)
         try:
             if city_name:
                 city_data = self.df[self.df["location"] == city_name]
@@ -606,7 +647,7 @@ class CityAnalysis:
 
     def top_10_selling_cars_per_city(self, city_name):
 
-        city_name = CityAnalysis.normalise_city_name(city_name)
+        city_name = normalise_city_name(city_name)
 
         self.df["vehicle"] = (
                 self.df["make"] + " " +
@@ -647,7 +688,7 @@ class CityAnalysis:
 
 
     def vehicle_type_sales_per_city(self, city_name):
-        city_name = CityAnalysis.normalise_city_name(city_name)
+        city_name = normalise_city_name(city_name)
         try:
             if city_name:
                 city_data = self.df[self.df["location"] == city_name]
@@ -675,8 +716,8 @@ class CityAnalysis:
 
  
     def median_brand_prices_per_city(self, city_name, brand_name):
-        city_name = CityAnalysis.normalise_city_name(city_name)
-        brand_name = CityAnalysis.normalise_brand_name(brand_name)
+        city_name = normalise_city_name(city_name)
+        brand_name = normalise_brand_name(brand_name)
 
         try:
             if city_name and brand_name:
