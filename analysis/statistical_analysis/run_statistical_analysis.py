@@ -13,6 +13,6 @@ if __name__ == "__main__":
     df = pd.read_csv("dataset/cleaned/cleaned_uae_cars.csv")
 
     vis = Visualisation()
-    corr = StatisticalAnalysis(df=df, plot=vis)
+    sa = StatisticalAnalysis(df=df, plot=vis)
 
-    print(corr.fuel_type_to_price_anova())
+    print(sa.fuel_type_to_price_anova())

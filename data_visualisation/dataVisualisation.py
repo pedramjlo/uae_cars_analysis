@@ -5,7 +5,7 @@ class Visualisation:
     def bar_chart(self, data, x, y, title=None, labels=None):
         fig = px.bar(data, x=x, y=y, title=title, labels=labels)
         fig.update_traces(marker_color='purple')
-        fig.update_yaxes(type="log")
+        #fig.update_yaxes(type="log")
         fig.show()
 
 

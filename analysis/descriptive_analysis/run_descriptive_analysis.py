@@ -32,6 +32,7 @@ if __name__ == "__main__":
     #ba.top_10_expensive_brands()
     #ba.least_expensive_brands()
     #ba.top_10_eco_friendly_brands()
+    ba.least_eco_friendly_brands()
     #ba.fuel_type_market_share_by_brand()
     #ba.top_4_brands_yearly_sales()
 
@@ -41,20 +42,23 @@ if __name__ == "__main__":
     #va.top_10_least_expensive_cars()
     #va.top_10_profitable_cars()
     #va.least_10_profitable_cars()
-    #va.median_vehicle_price_by_type()
+    #va.median_vehicle_price_by_body_type()
+    #va.median_vehicle_price_by_fuel_type()
+    #print(va.vehicle_sales_count_by_fuel_type())
 
 
     # SALES ANALYSIS
     #print(sales.total_sales())
     #print(sales.sales_by_year())
     #sales.sales_by_year()
+    #sales.sales_by_fuel_type()
     
 
     # CITY ANALYSIS
     #city.revenue_per_city()
     #city.top_selling_brands_per_city(city_name=input("enter city: "))
     #city.fuel_type_sales_per_city(city_name=input("enter city: "))
-    print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
+    #print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
     #city.vehicle_type_sales_per_city(city_name=input("enter city: "))
     #print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
     

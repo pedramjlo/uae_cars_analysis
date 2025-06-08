@@ -134,6 +134,32 @@ class BrandAnalysis:
         except Exception as e:
             raise e
         
+
+    def least_eco_friendly_brands(self):
+        try:
+            electric_type = self.df[self.df['fuel_type'].str.lower() == 'diesel']
+            results = (
+                electric_type.groupby("make")
+                .size()
+                .reset_index(name='diesel_model_count')
+                .sort_values(by='diesel_model_count', ascending=False)
+            )
+
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="diesel_model_count", 
+                labels={
+                    "make": "Car Brand",
+                    "diesel_model_count": "Number of Diesel Models"
+                },
+                title="Least Eco-Friendly Brands"
+            )
+            return results
+        except Exception as e:
+            raise e
+
+        
         
     def top_4_brands_yearly_sales(self):
         try:
@@ -324,7 +350,7 @@ class VehicleAnalysis:
             raise e
 
 
-    def median_vehicle_price_by_type(self):
+    def median_vehicle_price_by_body_type(self):
         try:
             results = (
                 self.df.groupby("body_type")["price"]
@@ -345,6 +371,59 @@ class VehicleAnalysis:
             return results
         except Exception as e:
             raise e
+        
+
+    def vehicle_sales_count_by_fuel_type(self):
+        try:
+            # Count the number of vehicles sold per fuel type
+            results = (
+                self.df['fuel_type']
+                .value_counts()
+                .rename_axis('fuel_type')
+                .reset_index()
+            )
+
+            # Plot the results using the custom plotter
+            self.plot.bar_chart(
+                data=results,
+                x="fuel_type",
+                y="count",
+                labels={
+                    "fuel_type": "Fuel Type",
+                    "count": "Number of Cars Sold"
+                },
+                title="Total Number of Vehicles Sold by Fuel Type"
+            )
+
+            return results
+
+        except Exception as e:
+            raise e
+
+            
+
+    def median_vehicle_price_by_fuel_type(self):
+        try:
+            results = (
+                self.df.groupby("fuel_type")["price"]
+                .median()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+            )
+            self.plot.bar_chart(
+                data=results,
+                x="fuel_type",
+                y="price",
+                labels={
+                    "fuel_type": "Fuel Type",
+                    "price": "Median Price (AED)"
+                },
+                title="Median Price of Fuel Types"
+            )
+            return results
+        except Exception as e:
+            raise e
+
 
 
 
@@ -397,7 +476,32 @@ class SalesAnalysis:
     def total_sales(self):
         sales = self.df["price"].sum()
         formatted_currency = format_currency(sales, 'AED', locale='en_AE')
+        
         return formatted_currency
+    
+
+
+    def sales_by_fuel_type(self):
+        try:
+            results = (
+                self.df.groupby("fuel_type")["price"]
+                .sum()
+                .reset_index()
+                .sort_values(by="price", ascending=False)
+            )
+            self.plot.bar_chart(
+                data=results,
+                x="fuel_type",
+                y="price",
+                labels={
+                    "fuel_type": "Fuel Type",
+                    "price": "Total Sales (AED)"
+                },
+                title="Total Sales by Fuel Types"
+            )
+            return results
+        except Exception as e:
+            raise e
         
 
 

@@ -36,20 +36,20 @@ class StatisticalAnalysis:
 
     # T-TEST METHOD SINCE ONLY PRICE AND MILEAGE ARE TAKEN INTO ACCOUNT
     def fuel_type_to_price_anova(self):
-        self.df = self.df.dropna(subset=['fuel_type', 'price'])
+        vehicle_sales = self.df.groupby(['fuel_type', 'make', 'model', 'year']).size().reset_index(name='sales_count')
 
-        groups = [group['price'].values for name, group in self.df.groupby('fuel_type')]
+        # perform ANOVA
+        groups = [group['sales_count'].values for name, group in vehicle_sales.groupby('fuel_type')]
         f_stat, p_value = stats.f_oneway(*groups)
 
         print(f"F-statistic: {f_stat}")
         print(f"P-value: {p_value}")
 
-        tukey = pairwise_tukeyhsd(endog=self.df['price'], groups=self.df['fuel_type'], alpha=0.05)
-        print(tukey)
 
-        if self.plot and hasattr(self.plot, 'box_plot'):
-            self.plot.box_plot(
-                data=self.df,
-                x="fuel_type",
-                y="price"
-            )
+
+
+        if p_value < 0.05:
+            tukey = pairwise_tukeyhsd(endog=vehicle_sales['sales_count'], groups=vehicle_sales['fuel_type'], alpha=0.05)
+            print(tukey.summary())
+        else:
+            print("No significant difference found in ANOVA; skipping Tukey test.")
