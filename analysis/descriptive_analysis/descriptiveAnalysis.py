@@ -741,5 +741,32 @@ class CityAnalysis:
 
         except Exception as e:
             raise e
+        
+    def most_popular_colors(self, city_name):
+        city_name = normalise_city_name(city_name)
+        try:
+            if city_name:
+                city_data = self.df[self.df["location"] == city_name]
+                results = (
+                    city_data.groupby("color")
+                    .size()
+                    .reset_index(name='color_count')
+                    .sort_values(by="color_count", ascending=False)
+                )
+                self.plot.bar_chart(
+                data=results,
+                x="color",
+                y="color_count",
+                labels={
+                    "color": "Color",
+                    "color_count": f"Quantity Sold"
+                },
+                title=f"Car Quantities Sold by Color in {city_name}"
+            )
+
+            return results
+        except Exception as e:
+            raise e
+
 
             

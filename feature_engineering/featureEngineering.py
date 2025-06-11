@@ -17,9 +17,8 @@ class FeatureEngineering:
 
 
     """
-    Extracting condition data from dscription column into a new column based on a regex pattern
+    Extracting condition data from dscription column into a new column based on a regex pattern <condition: .>
     """
-
     def create_condition_column(self):
         column_name = "condition"
 
@@ -36,3 +35,6 @@ class FeatureEngineering:
                 logging.warning(f"Column {column_name} already exists!")
         else:
             logging.error("Column 'description' does not exist.")
+
+    
+

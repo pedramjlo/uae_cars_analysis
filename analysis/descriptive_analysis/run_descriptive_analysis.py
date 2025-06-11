@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     #print(df["price"].skew())
 
-    print(df.groupby("make")["price"].skew().sort_values(ascending=False))
+    #print(df.groupby("make")["price"].skew().sort_values(ascending=False))
 
 
     # BRAND ANALYSIS
@@ -67,4 +67,4 @@ if __name__ == "__main__":
     #print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
     #city.vehicle_type_sales_per_city(city_name=input("enter city: "))
     #print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
-    
+    city.most_popular_colors(city_name="al ain")
