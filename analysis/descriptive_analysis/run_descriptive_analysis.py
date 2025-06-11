@@ -12,6 +12,7 @@ from descriptiveAnalysis import SalesAnalysis
 from descriptiveAnalysis import CityAnalysis
 
 from distributionAnalysis import Distribution
+from distributionAnalysis import Skewness
 
 import pandas as pd
 
@@ -28,9 +29,9 @@ if __name__ == "__main__":
     city = CityAnalysis(df=df, plot=visualisor)
 
     distro = Distribution(df=df, plot=visualisor)
+    sk = Skewness(df=df, plot=visualisor)
 
 
-    #print(df["price"].skew())
 
     #print(df.groupby("make")["price"].skew().sort_values(ascending=False))
 
@@ -45,6 +46,7 @@ if __name__ == "__main__":
     #ba.fuel_type_market_share_by_brand()
     #ba.top_4_brands_yearly_sales()
     #print(ba.get_sales_trend(brand_name="rolls-royce"))
+    #ba.median_prices()
 
 
     # VEHICLE ANALYSIS
@@ -76,4 +78,5 @@ if __name__ == "__main__":
 
 
     # DISTRIBUTION
-    print(distro.calculate_std(group_by_col="make", target_col="price"))
+    print(distro.get_std(group_by_col="make", target_col="price"))
+    #print(sk.get_skewness(group_by_col="make", target_col="price"))

@@ -30,7 +30,7 @@ class BrandAnalysis:
                 .sort_values(by='price', ascending=False)
             )
 
-            self.plot.bar_chart(
+            self.plot.scatter_plot(
                 data=results, 
                 x="make", 
                 y="price", 
