@@ -11,9 +11,11 @@ from analysis.descriptive_analysis.descriptiveAnalysis import BrandAnalysis
 from analysis.descriptive_analysis.descriptiveAnalysis import VehicleAnalysis
 from analysis.descriptive_analysis.descriptiveAnalysis import SalesAnalysis
 from analysis.descriptive_analysis.descriptiveAnalysis import CityAnalysis
-
 from analysis.descriptive_analysis.distributionAnalysis import Distribution
 from analysis.descriptive_analysis.distributionAnalysis import Skewness
+
+
+from data_scaling.dataProcessing import DataProcessing
 
 
 
@@ -62,7 +64,7 @@ if __name__ == "__main__":
 
     # DESCRIPTIVE ANALYSIS METHODS
     ba = BrandAnalysis(df=df, plot=visualisor)
-    #ba.median_prices()
+    median_prices_df = ba.median_prices()
     #ba.top_10_profitable_brands()
     #ba.least_10_profitable_brands()
     #ba.top_10_expensive_brands()
@@ -105,9 +107,20 @@ if __name__ == "__main__":
 
 
     distro = Distribution(df=df, plot=visualisor)
-    #print(distro.get_std(group_by_col="make", target_col="price"))
+    prices_std = distro.get_std(group_by_col="make", target_col="price")
 
 
 
     sk = Skewness(df=df, plot=visualisor)
-    print(sk.get_skewness(group_by_col="make", target_col="price"))
+    prices_skewness = sk.get_skewness(group_by_col="make", target_col="price")
+
+
+
+    # MERGING MEDIAN PRICES, STD, AND SKEWNESS
+    prices_metrics_df = prices_std.merge(prices_skewness, on='make').merge(median_prices_df, on='make')
+
+
+
+
+    # DATA PROCESSING
+    dp = DataProcessing()

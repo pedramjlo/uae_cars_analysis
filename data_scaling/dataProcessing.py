@@ -2,41 +2,32 @@
 processing the skewness, standard deviation, and median prices for data scaling
 """
 
-import sys
-import os
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
-# Move up two directories
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
+class DataScaler:
+    def __init__(self, strategy="standard"):
+        self.strategy = strategy
+        self.scaler = None
 
+        if strategy == "standard":
+            self.scaler = StandardScaler()
+        elif strategy == "minmax":
+            self.scaler = MinMaxScaler()
+        elif strategy == "robust":
+            self.scaler = RobustScaler()
+        else:
+            raise ValueError(f"Unknown scaling strategy: {strategy}")
 
+    def fit(self, data):
+        """
+        Fit the scaler to the data.
 
-from analysis.descriptive_analysis.descriptiveAnalysis import BrandAnalysis # median prices method
-from analysis.descriptive_analysis.distributionAnalysis import Distribution
-from analysis.descriptive_analysis.distributionAnalysis import Skewness
+        Parameters:
+        - X: pandas DataFrame or NumPy array with numeric values to scale.
 
+        This method learns the scaling parameters (e.g., mean, std, min, max).
+        """
+        if self.scaler is None:
+            raise RuntimeError("Scaler not initialized properly.")
 
-
-class DataProcessing:
-    def __init__(self, brand_analysis, brand_std, brand_skew):
-        self.brand_analysis = brand_analysis
-        self.brand_std = brand_std
-        self.brand_skew = brand_skew
-    
-    def process(self):
-        try:
-            median_prices = BrandAnalysis.median_prices()
-            std = Distribution.get_std(group_by_col="make", target_col="price")
-            skew = Skewness.get_skewness(group_by_col="make", target_col="price")
-
-            print(median_prices, std, skew)
-
-        except Exception as e:
-            raise e
-
-
-
-
-
-
-p = DataProcessing()
-p.process()
+        self.scaler.fit(data)
