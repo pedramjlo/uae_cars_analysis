@@ -22,7 +22,7 @@ class Pipeline:
 
     def save_cleaned_data(self):
         saver = DataSaver(cleaned_data=self.cleaned_data)
-        return saver.save_changes()
+        return saver.save_cleaning_changes()
     
 
     def get_columns(self):
