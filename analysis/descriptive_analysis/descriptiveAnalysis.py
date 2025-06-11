@@ -21,6 +21,31 @@ class BrandAnalysis:
         self.plot = plot
 
 
+    def median_prices(self):
+        try:
+            results = (
+                self.df.groupby("make")["price"]
+                .median()
+                .reset_index()
+                .sort_values(by='price', ascending=False)
+            )
+
+            self.plot.bar_chart(
+                data=results, 
+                x="make", 
+                y="price", 
+                labels={
+                    "make": "Car Brand",
+                    "price": "Median Prices (AED)"
+                },
+                title="Median Prices of Brands"
+            )
+            
+            return results
+        except Exception as e:
+            raise e
+
+
     def top_10_profitable_brands(self):
         try:
             results = (

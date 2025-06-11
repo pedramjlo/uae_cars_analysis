@@ -23,6 +23,6 @@ class Visualisation:
         fig.update_yaxes(type="log")
         fig.show()
 
-    def scatter_plot(self, x, y, title=None, labels=None):
-        fig = px.scatter(x=x, y=y, title=title, labels=labels)
+    def scatter_plot(self, data, x, y, title=None, labels=None):
+        fig = px.scatter(data, x=x, y=y, title=title, labels=labels)
         fig.show()

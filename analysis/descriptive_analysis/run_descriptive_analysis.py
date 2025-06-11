@@ -11,6 +11,8 @@ from descriptiveAnalysis import VehicleAnalysis
 from descriptiveAnalysis import SalesAnalysis
 from descriptiveAnalysis import CityAnalysis
 
+from distributionAnalysis import Distribution
+
 import pandas as pd
 
 
@@ -24,6 +26,8 @@ if __name__ == "__main__":
     va = VehicleAnalysis(df=df, plot=visualisor)
     sales = SalesAnalysis(df=df, plot=visualisor)
     city = CityAnalysis(df=df, plot=visualisor)
+
+    distro = Distribution(df=df, plot=visualisor)
 
 
     #print(df["price"].skew())
@@ -67,4 +71,9 @@ if __name__ == "__main__":
     #print(city.top_10_selling_cars_per_city(city_name=input("enter city: ")))
     #city.vehicle_type_sales_per_city(city_name=input("enter city: "))
     #print(city.median_brand_prices_per_city(city_name=input("enter city: "), brand_name=input("enter brand: ")))
-    city.most_popular_colors(city_name="al ain")
+    #city.most_popular_colors(city_name=input("enter city: "))
+
+
+
+    # DISTRIBUTION
+    print(distro.calculate_std(group_by_col="make", target_col="price"))
