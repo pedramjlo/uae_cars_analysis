@@ -26,7 +26,9 @@ if __name__ == "__main__":
     city = CityAnalysis(df=df, plot=visualisor)
 
 
-    print(df["cylinders"].skew())
+    #print(df["price"].skew())
+
+    print(df.groupby("make")["price"].skew().sort_values(ascending=False))
 
 
     # BRAND ANALYSIS
