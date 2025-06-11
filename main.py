@@ -15,7 +15,7 @@ from analysis.descriptive_analysis.distributionAnalysis import Distribution
 from analysis.descriptive_analysis.distributionAnalysis import Skewness
 
 
-from data_scaling.dataProcessing import DataProcessing
+from data_scaling.dataProcessing import DataScaler
 
 
 
@@ -123,4 +123,8 @@ if __name__ == "__main__":
 
 
     # DATA PROCESSING
-    dp = DataProcessing()
+    scaler = DataScaler(strategy="standard")
+    scaler.fit(prices_metrics_df.drop(columns="make"))
+    scaled_data = scaler.transform(prices_metrics_df.drop(columns='make'))
+    print(scaled_data)
+
