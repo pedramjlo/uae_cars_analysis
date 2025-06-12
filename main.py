@@ -20,7 +20,8 @@ from data_scaling.dataProcessing import DataScaler
 
 
 
-class CleanerPipeline:
+
+class Pipeline:
     def __init__(self, raw_dataset):
         self.raw_dataset = raw_dataset
         self.loaded_raw_data = None
@@ -32,28 +33,40 @@ class CleanerPipeline:
 
 
     def run_cleaner(self):
-        cleaner = DataCleaner(raw_dataset=pl.loaded_raw_data)
+        cleaner = DataCleaner(raw_dataset=self.loaded_raw_data)
         self.cleaned_data = cleaner.clean_all()
     
 
     def save_cleaned_data(self):
-        saver = DataSaver(cleaned_data=self.cleaned_data)
-        return saver.save_cleaning_changes()
+        saver = DataSaver()
+        return saver.save_cleaning_changes(df=self.cleaned_data)
+    
+
+    def feature_engineering(self):
+        pass
     
 
     
 
     # CENTRAL FUNCTION TO RUN ALL PIPELINE METHODS AT ONCE
     def run(self):
-        pass
+        self.load_data()
+        self.run_cleaner()
+        self.save_cleaned_data()
+
 
 
 if __name__ == "__main__":
     raw_data = "dataset/raw/uae_used_cars.csv"
-    #pl = CleanerPipeline(raw_dataset=raw_data)
-    #pl.load_data()
-    #pl.run_cleaner()
-    #pl.save_cleaned_data()
+
+    # LOAD + CLEAN + SAVE THE RAW DATASET
+    pl = Pipeline(raw_dataset=raw_data)
+    pl.run()
+
+
+    # FEATURE ENGINEERING THE CLEANED DATAFRAME
+
+
 
 
     visualisor = Visualisation()
@@ -64,7 +77,7 @@ if __name__ == "__main__":
 
     # DESCRIPTIVE ANALYSIS METHODS
     ba = BrandAnalysis(df=df, plot=visualisor)
-    median_prices_df = ba.median_prices()
+    #median_prices_df = ba.median_prices()
     #ba.top_10_profitable_brands()
     #ba.least_10_profitable_brands()
     #ba.top_10_expensive_brands()
@@ -107,24 +120,20 @@ if __name__ == "__main__":
 
 
     distro = Distribution(df=df, plot=visualisor)
-    prices_std = distro.get_std(group_by_col="make", target_col="price")
+    #prices_std = distro.get_std(group_by_col="make", target_col="price")
 
 
 
     sk = Skewness(df=df, plot=visualisor)
-    prices_skewness = sk.get_skewness(group_by_col="make", target_col="price")
+    #prices_skewness = sk.get_skewness(group_by_col="make", target_col="price")
 
 
 
     # MERGING MEDIAN PRICES, STD, AND SKEWNESS
-    prices_metrics_df = prices_std.merge(prices_skewness, on='make').merge(median_prices_df, on='make')
+    #prices_metrics_df = prices_std.merge(prices_skewness, on='make').merge(median_prices_df, on='make')
 
 
 
 
-    # DATA PROCESSING
-    scaler = DataScaler(strategy="standard")
-    scaler.fit(prices_metrics_df.drop(columns="make"))
-    scaled_data = scaler.transform(prices_metrics_df.drop(columns='make'))
-    print(scaled_data)
+
 

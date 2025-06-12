@@ -30,6 +30,8 @@ class BrandAnalysis:
                 .sort_values(by='price', ascending=False)
             )
 
+            results = results.dropna(subset=["price"])
+
             self.plot.scatter_plot(
                 data=results, 
                 x="make", 

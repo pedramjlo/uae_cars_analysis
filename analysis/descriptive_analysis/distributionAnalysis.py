@@ -21,6 +21,8 @@ class Distribution:
                 .reset_index()
             )
 
+            std_per_group = std_per_group.dropna(subset=["price"])
+
             self.plot.scatter_plot(
                 data=std_per_group,
                 x=group_by_col,

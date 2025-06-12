@@ -1,15 +1,26 @@
 import pandas as pd
 import logging
 
+
 class DataSaver:
-    def __init__(self, cleaned_data: pd.DataFrame):
-        self.cleaned_data = cleaned_data
 
 
-    def save_cleaning_changes(self, cleaned_data_path='dataset/cleaned/cleaned_uae_cars.csv'):
+    @staticmethod
+    def save_to_csv(df, df_path, index=False):
         try:
-            self.cleaned_data.to_csv(cleaned_data_path, index=False)
+            df.to_csv(df_path, index=index)
+            logging.info(f"Data successfully saved to {df_path}")
+        except Exception as e:
+            logging.error(f"Failed to save data to {df_path}: {e}")
+        return df
+    
+    
+
+    @staticmethod
+    def save_cleaning_changes(df, df_path='dataset/cleaned/cleaned_uae_cars.csv'):
+        try:
+            df.to_csv(df_path, index=False)
             logging.info("The cleaned dataset was successfully saved")
         except Exception as e:
             logging.error(f"Failed to save the cleaned data file: {e}")
-        return self
+        return df
