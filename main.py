@@ -3,6 +3,7 @@ import pandas as pd
 from data_loading.dataLoading import DataLoader
 from data_cleaning.dataCleaning import DataCleaner
 from data_saving.dataSaving import DataSaver
+from feature_engineering.featureEngineering import FeatureEngineering
 
 
 from data_visualisation.dataVisualisation import Visualisation
@@ -35,36 +36,42 @@ class Pipeline:
     def run_cleaner(self):
         cleaner = DataCleaner(raw_dataset=self.loaded_raw_data)
         self.cleaned_data = cleaner.clean_all()
-    
 
-    def save_cleaned_data(self):
-        saver = DataSaver()
-        return saver.save_cleaning_changes(df=self.cleaned_data)
     
-
     def feature_engineering(self):
-        pass
+        fe = FeatureEngineering(df=self.cleaned_data)
+        self.cleaned_data = fe.run_feature_engineering()
+    
+
+    def save_data(self):
+        saver = DataSaver()
+        saver.save_cleaning_changes(df=self.cleaned_data)
+    
+
+    
+
     
 
     
 
     # CENTRAL FUNCTION TO RUN ALL PIPELINE METHODS AT ONCE
     def run(self):
-        self.load_data()
-        self.run_cleaner()
-        self.save_cleaned_data()
+        self.load_data() # LOAD THE RAW DATA
+        self.run_cleaner() # CLEAN THE RAW DATA
+        self.feature_engineering() # RUN FEATURE ENGINEERING METHODS
+        self.save_data() # SAVE THE CHANGES AFTER CLEANING TO A NEW FILE
+
+
 
 
 
 if __name__ == "__main__":
     raw_data = "dataset/raw/uae_used_cars.csv"
 
-    # LOAD + CLEAN + SAVE THE RAW DATASET
     pl = Pipeline(raw_dataset=raw_data)
     pl.run()
 
 
-    # FEATURE ENGINEERING THE CLEANED DATAFRAME
 
 
 

@@ -25,16 +25,23 @@ class FeatureEngineering:
         if "description" in self.df.columns:
             if column_name not in self.df.columns:
                 try:
-                    # Match city only if it appears after a comma at the end of the string
-                    regex_pattern = r'(?i)condition:\s*(.*)\.'
+                    # Pattern to extract condition
+                    regex_pattern = r'(?i)condition:\s*(.*?)\.'
+
+                    # Extract condition to new column
                     self.df[column_name] = self.df["description"].str.extract(regex_pattern, flags=re.IGNORECASE)
-                    logging.info(f"Extracted city names to column {column_name}.")
+
+                    # Remove the condition part from the description
+                    self.df["description"] = self.df["description"].str.replace(regex_pattern, '', flags=re.IGNORECASE, regex=True).str.strip()
+
+                    logging.info(f"Extracted condition values to column '{column_name}' and removed them from description.")
                 except Exception as e:
                     logging.error(f"Failed to extract the condition: {e}")
             else:
-                logging.warning(f"Column {column_name} already exists!")
+                logging.warning(f"Column '{column_name}' already exists!")
         else:
             logging.error("Column 'description' does not exist.")
+
 
 
     def run_feature_engineering(self):
